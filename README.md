@@ -21,7 +21,7 @@ HTTP/2 103
 link: </styles1.css>; rel=preload; as=style
 ```
 
-This attempts to get the browser doing some work in the server think period when normally it would be idle, fetching resources that would otherwise be delayed waiting for the server response. This has the potential have to a positive impact on the pages performance.
+This attempts to get the browser doing some work in the server think period when normally it would be idle, fetching resources that would otherwise be delayed waiting for the server response. This has the potential to have a positive impact on the pages performance.
 
 ![after-early-hints](https://user-images.githubusercontent.com/5073300/208553166-db900b3f-8bde-4975-98e9-ae95d231d86e.png)
 
