@@ -1,3 +1,37 @@
 # 103 Early Hints
 
-For a dynamic web application TTFB (Time To First Byte) can take time. For each request the server recieves in order to respond correctly it could be performing a number of things that can add up; multiple api requests (some in a serial nature), computation of data, constructing a html response etc. All this takes time and whilst this is happening the browser is just… waiting!
+For a dynamic web application Time To First Byte ([TTFB](https://web.dev/ttfb/)) can take time, this is certainly the case with the applications I work with. For each request the server recieves, in order to respond correctly it could be performing a number of things that can add up; multiple api requests (some in a serial nature), computation of data, constructing a html response etc. All this takes time and whilst this is happening the browser is just… waiting!
+
+This window is known as “server think time”, having sent the request the browser now puts its feet up and twiddles its fingers awaiting a response from the server!
+
+
+![before-early-hints](https://user-images.githubusercontent.com/5073300/208551694-15b9ed7c-dc8c-498a-bbfd-1aa2d9441159.png)
+
+What if we could utilise that waiting time and get the browser doing something useful that could potentially aid the performance of that page? This is where “Early Hints” comes in to play.
+
+Early Hints is an additional response status code, **103**. Its currently only supported in Chrome and is classed in [experimental status](https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Experimental_deprecated_obsolete#experimental).
+
+It’s used to send a preliminary response from the server whilst it is still preparing its final respionse. The intention is to be able to send hints to the browser so it can start to preconnect to required origins or preload required resources during the server think time phase. Examples could be critical CSS, JS resources, connections for 3rd party domains.
+
+
+An early hints response looks something like this
+
+```
+HTTP/2 103
+link: </styles1.css>; rel=preload; as=style
+```
+
+This attempts to get the browser doing some work in the server think period when normally it would be idle, fetching resources that would otherwise be delayed waiting for the server response. This has the potential have to a positive impact on the pages performance.
+
+![after-early-hints](https://user-images.githubusercontent.com/5073300/208553166-db900b3f-8bde-4975-98e9-ae95d231d86e.png)
+
+In the above example the style.css file is fetched alot earlier, during the server think time phase. Previously the browser would have had to wait for the first bytes of the server response to arrive before it had a chance to discover further resources such as the css file which it then had to fetch to render the page.
+
+### This sounds like HTTP2/Server push...
+Early hints on the surface sound similar to server push. There is one significant difference.
+
+The challenge HTTP2/Server push had was it allowed the server to push sub resources alongside the server response. This meant the server could push resources that the browser already had, i.e. resources already stored in its cache. This had the potential to lead to over fetching, network contention and it led to [no positive impact upon performance, in some cases it had an negative result](https://developer.chrome.com/blog/removing-push/).
+
+
+
+
