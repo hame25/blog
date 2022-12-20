@@ -11,7 +11,7 @@ What if we could utilise that waiting time and get the browser doing something u
 
 Early Hints is an additional response status code, **103**. Its currently only supported in Chrome and is classed in [experimental status](https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Experimental_deprecated_obsolete#experimental).
 
-It’s used to send a preliminary response from the server whilst it is still preparing its final respionse. The intention is to be able to send hints to the browser so it can start to preconnect to required origins or preload required resources during the server think time phase. Examples could be critical CSS, JS resources, connections for 3rd party domains.
+It’s used to send a preliminary response from the server whilst it is still preparing its final response. The intention is to be able to send hints to the browser so it can start to preconnect to required origins or preload required resources during the server think time phase. Examples could be critical CSS, JS resources, connections for 3rd party domains.
 
 
 An early hints response looks something like this
