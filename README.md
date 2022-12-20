@@ -54,7 +54,7 @@ res.writeEarlyHints({
 
 CDN's make the setup alot easier, provided your one supports it (cough, cough Akamai :wink:).
 
-Fastly and Cloudflare both support this response status and offer an approach where you may not need to make any tweaks to your origin application. Cloudflare for example provides ability to switch on this feature and cache and serve 103 Early Hints from their edge servers, providing even greater opportunity for speed improvement. It works by looking at Link response headers from your origin responses, caches them and serves these cached hints on subsequent request. In the future theres a suggestion that machine learning could be used to generate these hints based on historical data!
+Fastly and Cloudflare both support this response status and offer an approach where you may not need to make any tweaks to your origin application. Cloudflare for example provides ability to switch on this feature and cache and serve 103 Early Hints from their edge servers, providing even greater opportunity for speed improvement. It works by looking at Link response headers from your origin responses, caches them and serves these cached hints on subsequent requests. In the future theres a suggestion that machine learning could be used to generate these hints based on historical data!
 
 
 ### How to test Early Hints
