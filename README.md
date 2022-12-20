@@ -38,7 +38,7 @@ The difference with Early Hints is that it does exactly what it suggests, it’s
 Currently the only browser to support Early Hints is Chrome from version 103. Firefox looks to have [some work in progress](https://bugzilla.mozilla.org/show_bug.cgi?id=1407355)
  contributing towards supporting it.
  
-There are some constraints in its usage. Probably the most noticable when you start playing is that Chrome will ignore hints sent over HTTP/1.1 or earlier. They are also ignored if they are sent on an iframe navigation or if its sent on a subresource request. Alongside this it currently is supporting just `preconnect` and `preload`.
+There are some constraints in its usage. Probably the most noticable when you start playing is that Chrome will ignore hints sent over HTTP/1.1 or earlier. They are also ignored if they are sent on an iframe navigation or when they are sent on a subresource request. Alongside this it currently is supporting just `preconnect` and `preload`.
 
 From a server perspective node.js shipped support recently in [v18.11.0](https://nodejs.org/en/blog/release/v18.11.0/) for http and http2 on the server response object.
 
