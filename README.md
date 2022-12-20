@@ -30,7 +30,7 @@ In the above example the style.css file is fetched alot earlier, during the serv
 ### This sounds like HTTP2/Server push...
 Early hints on the surface sound similar to server push. There is one significant difference.
 
-The challenge HTTP2/Server push had was it allowed the server to push sub resources alongside the server response. This meant the server could push resources that the browser already had, i.e. resources already stored in its cache. This had the potential to lead to over fetching, network contention and it led to [no positive impact upon performance, in some cases it had an negative result](https://developer.chrome.com/blog/removing-push/).
+The challenge HTTP2/Server push had was it allowed the server to **push** subresources alongside the server response. This meant the server could push resources that the browser already had, i.e. resources already stored in its cache. This had the potential to lead to over fetching, network contention and it led to [no positive impact upon performance, in some cases it had an negative result](https://developer.chrome.com/blog/removing-push/).
 
 The difference with Early Hints is that it does exactly what it suggests, it’s just a hint! This hands the control back to the browser, it can choose to listen to or ignore the hint. So if the browser reasons it does not need to fetch the resource highlighted in the hint (e.g. its already in its cache) it can choose not to. This provides an alternative that is less prone to error.
 
