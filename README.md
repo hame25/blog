@@ -76,8 +76,8 @@ Cloudflare reported a [30% improvement in Largest Contentful Paint](https://blog
 Shopify (using Cloudflare) saw a [500ms improvement for LCP at p50](https://twitter.com/colinbendell/status/1539322190541295616).
 
 ### Next steps
-Clearly its early days and I'm interested in experimenting more with Early Hints in the applications I contribute to discover alot more. 
+Clearly its early days and I'm interested in experimenting more with Early Hints in the applications I contribute to discover more. 
 
-None of the applications I work with in the day-to-day can return a 200 response immediatley. They are dynamic, personalised applications with a decent number of api dependencies, so there is a lot of **server think time** that could be taken advantage of. Early hints has the potential to benefit our users experiences with positive side affects such as SEO rankings. Watch this space...
+None of the applications I work with in the day-to-day can return a 200 response immediatley. They are dynamic, personalised applications with a decent number of api dependencies, so there is a decent amount of **server think time** that could be taken advantage of. Early hints has the potential to benefit our users experiences with positive side affects such as SEO rankings. I'm looking forward to playing around some more :stuck_out_tongue_winking_eye:
 
 
