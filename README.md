@@ -32,6 +32,52 @@ Early hints on the surface sound similar to server push. There is one significan
 
 The challenge HTTP2/Server push had was it allowed the server to push sub resources alongside the server response. This meant the server could push resources that the browser already had, i.e. resources already stored in its cache. This had the potential to lead to over fetching, network contention and it led to [no positive impact upon performance, in some cases it had an negative result](https://developer.chrome.com/blog/removing-push/).
 
+The difference with Early Hints is that it does exactly what it suggests, it’s just a hint! This hands the control back to the browser, it can choose to listen to or ignore the hint. So if the browser reasons it does not need to fetch the resource highlighted in the hint (e.g. its already in its cache) it can choose not to. This provides an alternative that is less prone to error.
 
+### Implementing Early Hints
+Currently the only browser to support Early Hints is Chrome from version 103. Firefox looks to have [some work in progress](https://bugzilla.mozilla.org/show_bug.cgi?id=1407355)
+ contributing towards supporting it.
+ 
+There are some constraints in its usage. Probably the most noticable when you start playing is that Chrome will ignore hints sent over HTTP/1.1 or earlier. They are also ignored if they are sent on an iframe navigation or if its sent on a subresource request. Alongside this it currently is supporting just `preconnect` and `preload`.
+
+From a server perspective node.js shipped support recently in [v18.11.0](https://nodejs.org/en/blog/release/v18.11.0/) for http and http2 on the server response object.
+
+It can be simply implemented like the snippet below
+
+```javascript
+const earlyHintsLink = '</styles1.css>; rel=preload; as=style';
+
+res.writeEarlyHints({
+ 'link': earlyHintsLink,
+});
+```
+
+CDN's make the setup alot easier, provided your one supports it (cough, cough Akamai :wink:).
+
+Fastly and Cloudflare both support this response status and offer an approach where you may not need to make any tweaks to your origin application. Cloudflare for example provides ability to switch on this feature and cache and serve 103 Early Hints from their edge servers, providing even greater opportunity for speed improvement. It works by looking at Link response headers from your origin responses, caches them and serves these cached hints on subsequent request. In the future theres a suggestion that machine learning could be used to generate these hints based on historical data!
+
+
+### How to test Early Hints
+
+The usual suspects can be used to test early hints, dev tools, WebPageTest etc.
+
+In chrome If a resource is preloaded through Early Hints the associated PerformanceResourceTiming object will report that the initiatorType is `early-hints`
+
+```javascript
+performance.getEntriesByName('https://www.example-site.com/style.css')[0].initiatorType
+// => 'early-hints'
+```
+
+### Early results
+Early results and its important to emphasise **early***, have been promising. 
+
+Cloudflare reported a [30% improvement in Largest Contentful Paint](https://blog.cloudflare.com/early-hints/) ([LCP](https://web.dev/lcp/)) from its initial tests.
+
+Shopify (using Cloudflare) saw a [500ms improvement for LCP at p50](https://twitter.com/colinbendell/status/1539322190541295616).
+
+### Next steps
+Clearly its early days and I'm interested in experimenting more with Early Hints in the applications I contribute to discover alot more. 
+
+None of the applications I work with in the day-to-day can return a 200 response immediatley. They are dynamic, personalised applications with a decent number of api dependencies, so there is a lot of **server think time** that could be taken advantage of. Early hints has the potential to benefit our users experiences with positive side affects such as SEO rankings. Watch this space...
 
 
