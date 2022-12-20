@@ -69,7 +69,7 @@ performance.getEntriesByName('https://www.example-site.com/style.css')[0].initia
 ```
 
 ### Early results
-Early results and its important to emphasise **early***, have been promising. 
+Early results and its important to emphasise **early**, have been promising. 
 
 Cloudflare reported a [30% improvement in Largest Contentful Paint](https://blog.cloudflare.com/early-hints/) ([LCP](https://web.dev/lcp/)) from its initial tests.
 
